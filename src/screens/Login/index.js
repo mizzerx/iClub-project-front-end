@@ -18,8 +18,8 @@ import LoadingOverlay from '../../components/LoadingOverlay';
 
 const Login = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = React.useState('user_1@dev.com');
-  const [password, setPassword] = React.useState('user12345');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const dispatch = useDispatch();
   const state = useSelector((state) => state.auth);
 

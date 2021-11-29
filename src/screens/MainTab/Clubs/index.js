@@ -1,19 +1,22 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingOverlay from '../../../components/LoadingOverlay';
 import MainFlatList from '../../../components/MainFlatList';
 import MainText from '../../../components/MainText';
 import SearchBox from '../../../components/SearchBox';
-import { getClubs, getUserClubs, searchClub } from '../../../store/clubSlice';
-import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect, useNavigation } from '@react-navigation/core';
-import LoadingOverlay from '../../../components/LoadingOverlay';
+import { getUserClubs } from '../../../store/clubSlice';
 
 const Clubs = () => {
-  const state = useSelector(state => state.club);
+  const state = useSelector((state) => state.club);
   const dispatch = useDispatch();
   const [showFloatingBox, setShowFloatingBox] = useState(false);
   const navigation = useNavigation();
+
+  const [data, setData] = useState(state.clubs);
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     dispatch(getUserClubs());
@@ -24,6 +27,23 @@ const Clubs = () => {
       dispatch(getUserClubs());
     }, []),
   );
+
+  useEffect(() => {
+    setData(state.clubs);
+  }, [state.clubs]);
+
+  useEffect(() => {
+    if (!keyword) {
+      setData(state.clubs);
+      return;
+    }
+
+    const filteredData = state.clubs.filter((club) => {
+      return club.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+
+    setData(filteredData);
+  }, [keyword, state.clubs]);
 
   const renderFloatingButton = () => {
     return (
@@ -49,8 +69,9 @@ const Clubs = () => {
         }}
         onPress={() => {
           setShowFloatingBox(!showFloatingBox);
-        }}>
-        <Ionicons name='ios-add' size={30} color='green' />
+        }}
+      >
+        <Ionicons name="ios-add" size={30} color="green" />
       </TouchableOpacity>
     );
   };
@@ -74,7 +95,8 @@ const Clubs = () => {
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
           padding: 16,
-        }}>
+        }}
+      >
         <TouchableOpacity
           style={{
             flexDirection: 'row',
@@ -88,8 +110,9 @@ const Clubs = () => {
           onPress={() => {
             navigation.navigate('CreateClub');
             setShowFloatingBox(false);
-          }}>
-          <Ionicons name='ios-add' size={30} color='green' />
+          }}
+        >
+          <Ionicons name="ios-add" size={30} color="green" />
           <MainText>Add new club</MainText>
         </TouchableOpacity>
         <View
@@ -108,11 +131,12 @@ const Clubs = () => {
           }}
           onPress={() => {
             navigation.navigate('JoinClub');
-          }}>
+          }}
+        >
           <Ionicons
-            name='ios-log-in'
+            name="ios-log-in"
             size={30}
-            color='green'
+            color="green"
             style={{ marginRight: 8 }}
           />
           <MainText>Join club</MainText>
@@ -126,7 +150,8 @@ const Clubs = () => {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ClubDetail', { clubId: item._id });
-        }}>
+        }}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -137,7 +162,8 @@ const Clubs = () => {
             borderWidth: 1,
             borderColor: '#ccc',
             marginHorizontal: 16,
-          }}>
+          }}
+        >
           <View>
             <MainText fontSize={20} fontWeight={'bold'}>
               {item.name}
@@ -150,7 +176,8 @@ const Clubs = () => {
                 padding: 8,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <MainText color={'blue'} fontWeight={'600'}>
                 {item.clubAdmin.name}
               </MainText>
@@ -167,7 +194,8 @@ const Clubs = () => {
                 padding: 8,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               <MainText color={'white'} fontWeight={'700'}>
                 {item.clubAdmin._id === global.id ? 'OWNED' : 'OTHER'}
               </MainText>
@@ -183,14 +211,15 @@ const Clubs = () => {
       style={{
         flex: 1,
         backgroundColor: '#fff',
-      }}>
+      }}
+    >
       <SearchBox
-        onChangeText={text => {
-          dispatch(searchClub({ keyword: text }));
+        onChangeText={(text) => {
+          setKeyword(text);
         }}
       />
       <MainFlatList
-        data={state.clubs}
+        data={data}
         keyExtractor={(item, index) => {
           return index.toString() + item;
         }}

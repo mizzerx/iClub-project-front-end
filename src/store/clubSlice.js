@@ -8,7 +8,6 @@ const initialState = {
   loading: false,
   error: null,
   createSucess: false,
-  originClubs: [],
   joinSucess: false,
   joinedClubId: null,
   leaveSuccess: false,
@@ -196,16 +195,6 @@ const clubSlice = createSlice({
     resetClub: (state) => {
       state.club = {};
     },
-    searchClub: (state, action) => {
-      const { keyword } = action.payload;
-      state.clubs = state.clubs.filter((club) =>
-        club.name.toLowerCase().includes(keyword.toLowerCase()),
-      );
-
-      if (keyword === '') {
-        state.clubs = state.originClubs;
-      }
-    },
   },
   extraReducers: {
     [getClubs.pending]: (state, action) => {
@@ -213,7 +202,6 @@ const clubSlice = createSlice({
     },
     [getClubs.fulfilled]: (state, action) => {
       state.clubs = action.payload.data;
-      state.originClubs = action.payload.data;
       state.loading = false;
       state.error = null;
     },
@@ -335,5 +323,5 @@ const clubSlice = createSlice({
   },
 });
 
-export const { resetClubError, searchClub, resetClub } = clubSlice.actions;
+export const { resetClubError, resetClub } = clubSlice.actions;
 export default clubSlice.reducer;
