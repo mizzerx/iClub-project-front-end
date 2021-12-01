@@ -236,7 +236,7 @@ const Clubs = () => {
       />
       {renderFloatingButton()}
       {showFloatingBox && renderFloatingBox()}
-      <LoadingOverlay visible={state.loading} />
+      {/* <LoadingOverlay visible={state.loading} /> */}
     </View>
   );
 };

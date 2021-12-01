@@ -54,7 +54,7 @@ const MainTextInput = ({
           onFocus={onFocus}
           multiline={multiline}
           style={[style, { borderColor: error ? 'red' : 'black' }]}
-          disabled={disabled}
+          editable={!disabled}
           {...props}
         />
       </View>

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingOverlay from '../../../../../components/LoadingOverlay';
 import MainText from '../../../../../components/MainText';
 import { getWork } from '../../../../../store/workSlice';
+import Admin from './Admin';
+import Member from './Member';
 
 const WorkDetail = () => {
   const params = useRoute().params || {};
@@ -46,6 +48,7 @@ const WorkDetail = () => {
       >
         <MainText>{workState.work.description}</MainText>
       </View>
+      {isAdmin ? <Admin /> : <Member />}
       <LoadingOverlay visible={workState.loading} />
     </View>
   );

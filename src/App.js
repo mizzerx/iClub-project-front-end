@@ -10,6 +10,7 @@ import ChatContact from './screens/MainTab/Chat/ChatContact';
 import ClubDetail from './screens/MainTab/Clubs/ClubDetail';
 import ClubSetting from './screens/MainTab/Clubs/ClubDetail/ClubSetting';
 import CreateWork from './screens/MainTab/Clubs/ClubDetail/ClubWork/CreateWork';
+import WorkAnswer from './screens/MainTab/Clubs/ClubDetail/ClubWork/WorkAnswer';
 import WorkDetail from './screens/MainTab/Clubs/ClubDetail/ClubWork/WorkDetail';
 import CreateClub from './screens/MainTab/Clubs/CreateClub';
 import JoinClub from './screens/MainTab/Clubs/JoinClub';
@@ -49,6 +50,7 @@ const AppRoute = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen name="WorkDetail" component={WorkDetail} />
+            <Stack.Screen name="WorkAnswer" component={WorkAnswer} />
           </>
         ) : (
           <>

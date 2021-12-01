@@ -77,7 +77,10 @@ const ClubWork = () => {
           backgroundColor: '#fff',
         }}
         onPress={() => {
-          navigation.navigate('WorkDetail', { workId: item._id });
+          navigation.navigate('WorkDetail', {
+            workId: item._id,
+            isAdmin: isClubAdmin,
+          });
         }}
       >
         <Ionicons name="ios-reader" size={30} color="green" />
@@ -110,9 +113,13 @@ const ClubWork = () => {
         data={workState.works}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+        refreshing={workState.loading}
+        onRefresh={() => {
+          dispatch(getWorks(clubState.club._id));
+        }}
       />
       {isClubAdmin && renderFloatingButton()}
-      <LoadingOverlay visible={workState.loading} />
+      {/* <LoadingOverlay visible={workState.loading} /> */}
     </View>
   );
 };

@@ -38,15 +38,17 @@ const ChatList = () => {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(chatsQuery, (snapshot) => {
-      const parsedChats = snapshot.docs.map((doc) => {
-        return {
-          ...doc.data(),
-          id: doc.id,
-          userB: doc
-            .data()
-            .users.find((user) => user._id !== userState.user._id),
-        };
-      });
+      const parsedChats = snapshot.docs
+        .map((doc) => {
+          return {
+            ...doc.data(),
+            id: doc.id,
+            userB: doc
+              .data()
+              .users.find((user) => user._id !== userState.user._id),
+          };
+        })
+        .reverse();
       dispatch(setUnfilteredRooms(parsedChats));
       dispatch(setRooms(parsedChats.filter((doc) => doc.lastMessage)));
     });

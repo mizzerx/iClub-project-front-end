@@ -59,6 +59,11 @@ const stringFormat = {
     if (diffYear < 1) {
       return `${Math.floor(diffYear)} years ago`;
     }
+
+    if (!format) {
+      format = 'MMM DD, YYYY';
+    }
+
     return stringFormat.formatDate(date, format);
   },
 };
