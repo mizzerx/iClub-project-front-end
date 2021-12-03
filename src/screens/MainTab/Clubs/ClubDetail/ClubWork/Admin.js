@@ -108,8 +108,9 @@ const HandedIn = () => {
         ItemSeparatorComponent={() => (
           <View
             style={{
-              height: 8,
+              height: 1,
               backgroundColor: '#ddd',
+              marginVertical: 8,
             }}
           />
         )}

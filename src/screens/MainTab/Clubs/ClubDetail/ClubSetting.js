@@ -225,7 +225,9 @@ const ClubSetting = () => {
           </View>
         </View>
       </View>
-      {state.club.clubAdmin && global.id === state.club.clubAdmin._id ? (
+      {state.club &&
+      state.club.clubAdmin &&
+      global.id === state.club.clubAdmin._id ? (
         <MainButton
           style={{
             backgroundColor: 'red',
