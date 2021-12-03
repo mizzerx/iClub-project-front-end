@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Alert, View } from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import MainButton from '../../../../../components/MainButton';
 import MainText from '../../../../../components/MainText';
@@ -16,6 +23,7 @@ const Member = () => {
   const dispatch = useDispatch();
   const [answer, setAnswer] = React.useState('');
   const [documentLink, setDocumentLink] = React.useState('');
+  const [comment, setComment] = React.useState('');
   const [isCreate, setIsCreate] = React.useState(true);
 
   useEffect(() => {
@@ -35,6 +43,7 @@ const Member = () => {
     if (Object.keys(state.workAnswer).length !== 0) {
       setAnswer(state.workAnswer.answer);
       setDocumentLink(state.workAnswer.documentLink);
+      setComment(state.workAnswer.comments);
       setIsCreate(false);
       return;
     }
@@ -127,38 +136,47 @@ const Member = () => {
         borderColor: '#ddd',
         padding: 16,
       }}
+      onStartShouldSetResponder={() => true}
+      onResponderGrant={() => Keyboard.dismiss()}
     >
-      <MainText fontSize={28} fontWeight={'bold'}>
-        {'Submission'}
-      </MainText>
-      <View
-        style={{
-          padding: 8,
-        }}
-      >
-        <MainTextInput
-          label={'Your Answer'}
-          multiline
-          placeholder={'Plase fill your answer here!'}
-          value={answer}
-          onChangeText={(text) => setAnswer(text)}
-        />
-        <MainTextInput
-          label={'Supported Document Link (Optional)'}
-          value={state.workAnswer.comment}
-          placeholder={'Not yet!'}
-          disabled
-        />
-      </View>
-      {isCreate ? (
-        <MainButton onPress={handleSubmit}>
-          <MainText fontWeight={'500'}>{'Submit'}</MainText>
-        </MainButton>
-      ) : (
-        <MainButton onPress={handleUpdate}>
-          <MainText fontWeight={'500'}>{'Update'}</MainText>
-        </MainButton>
-      )}
+      <ScrollView>
+        <MainText fontSize={28} fontWeight={'bold'}>
+          {'Submission'}
+        </MainText>
+        <View
+          style={{
+            padding: 8,
+          }}
+        >
+          <MainTextInput
+            label={'Your Answer'}
+            multiline
+            placeholder={'Plase fill your answer here!'}
+            value={answer}
+            onChangeText={(text) => setAnswer(text)}
+          />
+          <MainTextInput
+            label={'Supported Document Link (Optional)'}
+            value={documentLink}
+            placeholder={'Not yet!'}
+          />
+          <MainTextInput
+            label={'Feeback'}
+            value={comment}
+            placeholder={'Not yet!'}
+            disabled
+          />
+        </View>
+        {isCreate ? (
+          <MainButton onPress={handleSubmit}>
+            <MainText fontWeight={'500'}>{'Submit'}</MainText>
+          </MainButton>
+        ) : (
+          <MainButton onPress={handleUpdate}>
+            <MainText fontWeight={'500'}>{'Update'}</MainText>
+          </MainButton>
+        )}
+      </ScrollView>
     </View>
   );
 };

@@ -5,19 +5,22 @@ const LoadingOverlay = ({ visible }) => {
   return (
     <Modal
       transparent={true}
-      animationType='none'
+      animationType="none"
       visible={visible}
-      onRequestClose={() => {}}>
+      onRequestClose={() => {}}
+    >
       <View
         style={{
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: 'rgba(0,0,0,0.5)',
-        }}>
+        }}
+      >
         <ActivityIndicator
           animating={true}
-          size='large'
+          size="large"
+          color="#fff"
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         />
       </View>

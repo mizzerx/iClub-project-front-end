@@ -1,6 +1,12 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { Alert, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import MainButton from '../../../../../components/MainButton';
 import MainText from '../../../../../components/MainText';
@@ -112,50 +118,54 @@ const WorkAnswer = () => {
   };
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={{
         flex: 1,
         backgroundColor: '#fff',
         padding: 16,
       }}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      keyboardVerticalOffset={100}
     >
-      <MainText fontSize={28} fontWeight={'bold'}>
-        {'Answer'}
-      </MainText>
-      <View
-        style={{
-          padding: 8,
-        }}
-      >
-        <MainTextInput
-          label={'Submited Time'}
-          value={stringFormat.formatDateToString(new Date(submitedTime))}
-          disabled
-        />
-        <MainTextInput
-          label={'Answer'}
-          multiline
-          placeholder={'Not Yet!'}
-          value={answer}
-          disabled
-        />
-        <MainTextInput
-          label={'Supported Document Link'}
-          value={documentLink}
-          placeholder={'Not Yet!'}
-          disabled
-        />
-        <MainTextInput
-          label={'Comment (Write feedback to the member)'}
-          value={comment}
-          placeholder={'Write comment here!'}
-          onChangeText={(text) => setComment(text)}
-        />
-      </View>
-      <MainButton onPress={handleUpdate}>
-        <MainText fontWeight={'500'}>{'Send Feeback'}</MainText>
-      </MainButton>
-    </View>
+      <ScrollView>
+        <MainText fontSize={28} fontWeight={'bold'}>
+          {'Answer'}
+        </MainText>
+        <View
+          style={{
+            padding: 8,
+          }}
+        >
+          <MainTextInput
+            label={'Submited Time'}
+            value={stringFormat.formatDateToString(new Date(submitedTime))}
+            disabled
+          />
+          <MainTextInput
+            label={'Answer'}
+            multiline
+            placeholder={'Not Yet!'}
+            value={answer}
+            disabled
+          />
+          <MainTextInput
+            label={'Supported Document Link'}
+            value={documentLink}
+            placeholder={'Not Yet!'}
+            disabled
+          />
+          <MainTextInput
+            label={'Comment (Write feedback to the member)'}
+            value={comment}
+            placeholder={'Write comment here!'}
+            onChangeText={(text) => setComment(text)}
+          />
+        </View>
+        <MainButton onPress={handleUpdate}>
+          <MainText fontWeight={'500'}>{'Send Feeback'}</MainText>
+        </MainButton>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

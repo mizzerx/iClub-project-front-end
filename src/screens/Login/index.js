@@ -91,7 +91,14 @@ const Login = () => {
           {'Login'}
         </MainText>
       </MainButton>
-      <View style={{ flexDirection: 'row', position: 'absolute', bottom: 32 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          position: 'absolute',
+          bottom: 32,
+          marginTop: 16,
+        }}
+      >
         <MainText>{"Don't have an account? "}</MainText>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <MainText fontSize={16} fontWeight={'bold'}>

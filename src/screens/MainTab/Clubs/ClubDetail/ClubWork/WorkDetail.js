@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
 import React, { useEffect, useLayoutEffect } from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingOverlay from '../../../../../components/LoadingOverlay';
 import MainText from '../../../../../components/MainText';
@@ -26,12 +26,14 @@ const WorkDetail = () => {
   }, []);
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={{
         flex: 1,
         backgroundColor: '#fff',
         padding: 16,
       }}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      keyboardVerticalOffset={100}
     >
       <MainText fontSize={28} fontWeight={'bold'}>
         {'Work Description'}
@@ -50,7 +52,7 @@ const WorkDetail = () => {
       </View>
       {isAdmin ? <Admin /> : <Member />}
       <LoadingOverlay visible={workState.loading} />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
